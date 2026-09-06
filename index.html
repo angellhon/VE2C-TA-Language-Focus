@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pawsome VE2C English Learning Hub | Dogs & Cats Edition 🐶🐱</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts (Fredoka & Noto Sans HK for Junior Secondary appeal) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+HK:wght@400;500;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            paw: {
+              orange: '#FF8A3D',
+              yellow: '#FFC72C',
+              cream: '#FFF9F2',
+              pink: '#FF758F',
+              teal: '#2EC4B6',
+              purple: '#845EC2',
+              dark: '#2B2D42',
+              light: '#F8F9FA'
+            }
+          },
+          fontFamily: {
+            sans: ['Quicksand', 'Noto Sans HK', 'sans-serif'],
+            display: ['Fredoka', 'Quicksand', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #FFF9F2;
+      background-image: radial-gradient(#FF8A3D 0.55px, transparent 0.55px), radial-gradient(#2EC4B6 0.55px, #FFF9F2 0.55px);
+      background-size: 22px 22px;
+      background-position: 0 0, 11px 11px;
+      font-family: 'Quicksand', 'Noto Sans HK', sans-serif;
+    }
+    .paw-card {
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .paw-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 20px -8px rgba(255, 138, 61, 0.25);
+    }
+    .tab-active {
+      background-color: #FF8A3D !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 4px 10px rgba(255, 138, 61, 0.35);
+    }
+    .drop-zone-hover {
+      border-color: #2EC4B6 !important;
+      background-color: #E6FFFA !important;
+    }
+    /* Hide scrollbar for clean horizontal tabs */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-paw-dark antialiased min-h-screen flex flex-col">
+
+  <!-- HEADER & NAVIGATION -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b-4 border-paw-orange shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMainTab('learn')">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-paw-orange to-paw-yellow flex items-center justify-center text-white text-2xl shadow-md transform -rotate-3 hover:rotate-0 transition">
+            🐶
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl font-display font-bold text-paw-dark tracking-wide">VE2C TA Language Focus and Practice</h1>
+              <span class="bg-paw-pink/10 text-paw-pink text-[11px] font-extrabold px-2.5 py-0.5 rounded-full border border-paw-pink/20">Dogs & Cats 🐱</span>
+            </div>
+            <p class="text-xs text-amber-700 font-bold">Vocational English Communication Skills • Youth College</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex space-x-1 sm:space-x-2">
+          <button id="main-nav-learn" onclick="switchMainTab('learn')" class="tab-active px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-book-open"></i> <span>Language Focus</span>
+          </button>
+          <button id="main-nav-drills" onclick="switchMainTab('drills')" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold text-slate-600 hover:bg-orange-50 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-gamepad text-paw-orange"></i> <span>Drill Exercises</span>
+          </button>
+          <button id="main-nav-quiz" onclick="switchMainTab('quiz')" class="px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold text-slate-600 hover:bg-orange-50 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-award text-paw-purple"></i> <span>Mastery Test</span>
+          </button>
+        </nav>
+
+        <!-- Classroom Mode Toggle -->
+        <div class="hidden lg:flex items-center gap-2 bg-amber-50 p-1.5 rounded-2xl border border-amber-200">
+          <button id="teacherModeToggle" onclick="toggleTeacherMode()" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-amber-800 shadow-sm hover:bg-amber-100 transition flex items-center gap-1.5">
+            <i class="fa-solid fa-chalkboard-user"></i> <span id="teacherModeText">Teacher Mode: OFF</span>
+          </button>
+          <button onclick="openClassroomTools()" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-slate-700 hover:bg-amber-100 transition" title="Classroom Tools (Timer & Picker)">
+            <i class="fa-solid fa-toolbox text-paw-teal"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <!-- TEACHER MODE BAR (WHEN ACTIVE) -->
+    <div id="teacherBanner" class="hidden mb-6 bg-gradient-to-r from-amber-500 to-paw-orange rounded-2xl p-4 text-white shadow-md flex flex-wrap items-center justify-between gap-4 border-2 border-yellow-300">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">👩‍🏫</div>
+        <div>
+          <h3 class="font-display font-bold text-sm">Classroom Presentation Mode Active</h3>
+          <p class="text-xs text-amber-100">Enlarged text enabled, answer keys accessible, and interactive teaching callouts highlighted!</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openClassroomTools()" class="bg-white text-paw-dark px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-amber-50 transition shadow-sm">
+          <i class="fa-solid fa-stopwatch mr-1 text-paw-orange"></i> Timer & Picker
+        </button>
+        <button onclick="revealAllAnswers()" class="bg-yellow-300 text-paw-dark px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-yellow-200 transition shadow-sm">
+          <i class="fa-solid fa-eye mr-1"></i> Reveal All Drill Keys
+        </button>
+      </div>
+    </div>
+
+    <!-- ================= SECTION 1: LANGUAGE FOCUS (TEACHING & STUDY) ================= -->
+    <section id="section-learn" class="space-y-6">
+      
+      <!-- Welcome Hero Card -->
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border-3 border-amber-200 shadow-sm relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-3 max-w-2xl z-10">
+          <div class="inline-flex items-center gap-2 bg-paw-cream border border-amber-300 px-3 py-1 rounded-full text-xs font-bold text-amber-800">
+            <span>🐾 Learning Companion</span>
+            <span class="w-2 h-2 rounded-full bg-paw-teal"></span>
+            <span>Buddy the Dog & Whiskers the Cat</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-display font-bold text-paw-dark leading-tight">
+            Master Vocational English Email Replies with Cute Pets! 🐶🐱
+          </h2>
+          <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+            Explore 7 essential grammar units for making suggestions, giving explanations, stating preferences, describing community activities, elaborating, making offers, and writing formal email replies!
+          </p>
+        </div>
+
+        <!-- Animated Cute Mascot SVG Banner -->
+        <div class="w-full md:w-72 h-36 bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center relative p-2 shadow-inner border border-amber-200 flex-shrink-0">
+          <svg class="w-full h-full" viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg">
+            <!-- Dog SVG -->
+            <g transform="translate(40, 20)">
+              <circle cx="40" cy="40" r="32" fill="#FF8A3D"/>
+              <circle cx="20" cy="25" r="12" fill="#E65100"/>
+              <circle cx="60" cy="25" r="12" fill="#E65100"/>
+              <circle cx="40" cy="48" r="16" fill="#FFF9F2"/>
+              <circle cx="32" cy="38" r="4" fill="#2B2D42"/>
+              <circle cx="48" cy="38" r="4" fill="#2B2D42"/>
+              <ellipse cx="40" cy="46" rx="6" ry="4" fill="#2B2D42"/>
+              <path d="M 36 54 Q 40 60 44 54" stroke="#2B2D42" stroke-width="2" fill="none"/>
+              <!-- Collar -->
+              <rect x="22" y="66" width="36" height="8" rx="4" fill="#2EC4B6"/>
+            </g>
+            <!-- Cat SVG -->
+            <g transform="translate(180, 20)">
+              <circle cx="40" cy="40" r="32" fill="#845EC2"/>
+              <!-- Cat Ears -->
+              <polygon points="15,15 25,30 10,35" fill="#4B4453"/>
+              <polygon points="65,15 55,30 70,35" fill="#4B4453"/>
+              <circle cx="40" cy="48" r="15" fill="#FFF9F2"/>
+              <ellipse cx="30" cy="38" rx="4" ry="6" fill="#00C9A7"/>
+              <ellipse cx="50" cy="38" rx="4" ry="6" fill="#00C9A7"/>
+              <polygon points="40,46 36,42 44,42" fill="#FF758F"/>
+              <!-- Whiskers -->
+              <line x1="15" y1="42" x2="28" y2="44" stroke="#2B2D42" stroke-width="1.5"/>
+              <line x1="12" y1="48" x2="28" y2="48" stroke="#2B2D42" stroke-width="1.5"/>
+              <line x1="65" y1="42" x2="52" y2="44" stroke="#2B2D42" stroke-width="1.5"/>
+              <line x1="68" y1="48" x2="52" y2="48" stroke="#2B2D42" stroke-width="1.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Unit Selector Pills -->
+      <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+        <button onclick="switchUnit('unit1')" id="unit-tab-unit1" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-paw-orange text-white shadow-sm flex-shrink-0 flex items-center gap-2">
+          <span>1. Making Suggestions</span> 💡
+        </button>
+        <button onclick="switchUnit('unit2')" id="unit-tab-unit2" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200">
+          <span>2. Giving Explanations</span> 💬
+        </button>
+        <button onclick="switchUnit('unit3')" id="unit-tab-unit3" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200">
+          <span>3. Stating Preferences</span> ❤️
+        </button>
+        <button onclick="switchUnit('unit4')" id="unit-tab-unit4" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200">
+          <span>4. Activity Descriptions</span> 📋
+        </button>
+        <button onclick="switchUnit('unit5')" id="unit-tab-unit5" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200">
+          <span>5. Giving Elaborations</span> 🔍
+        </button>
+        <button onclick="switchUnit('unit6')" id="unit-tab-unit6" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200">
+          <span>6. Making Offers</span> 🤝
+        </button>
+        <button onclick="switchUnit('unit7')" id="unit-tab-unit7" class="unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200">
+          <span>7. Email Expressions</span> ✉️
+        </button>
+      </div>
+
+      <!-- UNIT 1: MAKING SUGGESTIONS -->
+      <div id="unit-content-unit1" class="unit-box space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-orange-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 text-paw-orange flex items-center justify-center text-sm font-black">1</span>
+              Making Suggestions (提出建議)
+            </h3>
+            <span class="text-xs bg-orange-100 text-paw-orange font-bold px-3 py-1 rounded-full">VE2C Page 2-3</span>
+          </div>
+
+          <!-- Grammar Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Pattern 1: Using 'suggest' -->
+            <div class="bg-amber-50/70 rounded-2xl p-4 border border-amber-200 space-y-2">
+              <div class="font-bold text-amber-900 text-sm flex items-center gap-1.5">
+                <span>🐶 Pattern A: Using 'suggest'</span>
+              </div>
+              <ul class="text-xs space-y-2 text-slate-700 font-medium">
+                <li class="p-2 bg-white rounded-xl border border-amber-100 flex justify-between items-center">
+                  <div>
+                    <span class="text-paw-orange font-bold">1. <u>suggest</u> + Noun Phrase:</span><br>
+                    "<u>I suggest</u> <span class="font-bold text-indigo-600">a charity concert</span>."
+                  </div>
+                  <button onclick="speakText('I suggest a charity concert.')" class="px-2 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-volume-high text-paw-orange"></i>
+                  </button>
+                </li>
+                <li class="p-2 bg-white rounded-xl border border-amber-100 flex justify-between items-center">
+                  <div>
+                    <span class="text-paw-orange font-bold">2. <u>suggest</u> + Gerund (v-ing):</span><br>
+                    "<u>I suggest</u> <span class="font-bold text-indigo-600">organising</span> a charity concert."
+                  </div>
+                  <button onclick="speakText('I suggest organising a charity concert.')" class="px-2 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-volume-high text-paw-orange"></i>
+                  </button>
+                </li>
+                <li class="p-2 bg-white rounded-xl border border-amber-100 flex justify-between items-center">
+                  <div>
+                    <span class="text-paw-orange font-bold">3. <u>suggest</u> + that-clause:</span><br>
+                    "<u>I suggest (that) we (should)</u> <span class="font-bold text-indigo-600">organise</span> a charity concert."
+                  </div>
+                  <button onclick="speakText('I suggest that we should organise a charity concert.')" class="px-2 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-volume-high text-paw-orange"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Pattern 2: Using Modals -->
+            <div class="bg-teal-50/70 rounded-2xl p-4 border border-teal-200 space-y-2">
+              <div class="font-bold text-teal-900 text-sm flex items-center gap-1.5">
+                <span>🐱 Pattern B: Using Modals</span>
+              </div>
+              <ul class="text-xs space-y-2 text-slate-700 font-medium">
+                <li class="p-2 bg-white rounded-xl border border-teal-100 flex justify-between items-center">
+                  <div>
+                    <span class="text-paw-teal font-bold"><u>I think we should</u> + Base Verb:</span><br>
+                    "<u>I think we should</u> <span class="font-bold text-teal-700">organise</span> a charity concert."
+                  </div>
+                  <button onclick="speakText('I think we should organise a charity concert.')" class="px-2 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-900 text-xs font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-volume-high text-paw-teal"></i>
+                  </button>
+                </li>
+                <li class="p-2 bg-white rounded-xl border border-teal-100 flex justify-between items-center">
+                  <div>
+                    <span class="text-paw-teal font-bold"><u>Perhaps/Maybe we can/could</u> + Base Verb:</span><br>
+                    "<u>Perhaps we could</u> <span class="font-bold text-teal-700">organise</span> a charity concert."
+                  </div>
+                  <button onclick="speakText('Perhaps we could organise a charity concert.')" class="px-2 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-900 text-xs font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-volume-high text-paw-teal"></i>
+                  </button>
+                </li>
+                <li class="p-2 bg-white rounded-xl border border-teal-100 flex justify-between items-center">
+                  <div>
+                    <span class="text-paw-teal font-bold"><u>It might be a good idea / advisable to</u> + verb:</span><br>
+                    "<u>It might be a good idea to</u> <span class="font-bold text-teal-700">organise</span> a charity concert."
+                  </div>
+                  <button onclick="speakText('It might be a good idea to organise a charity concert.')" class="px-2 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-900 text-xs font-bold transition flex items-center gap-1">
+                    <i class="fa-solid fa-volume-high text-paw-teal"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Pattern 3: Introducing a topic -->
+            <div class="bg-purple-50/70 rounded-2xl p-4 border border-purple-200 space-y-2">
+              <div class="font-bold text-purple-900 text-sm flex items-center gap-1.5">
+                <span>🐾 Pattern C: Introducing a Topic</span>
+              </div>
+              <div class="p-2 bg-white rounded-xl border border-purple-100 text-xs text-slate-700 space-y-2">
+                <p class="font-bold text-paw-purple">Topic Introducers:</p>
+                <div class="flex flex-wrap gap-1">
+                  <span class="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded"><u>Regarding</u></span>
+                  <span class="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded"><u>Concerning</u></span>
+                  <span class="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded"><u>About</u></span>
+                  <span class="bg-purple-100 text-purple-800 font-bold px-2 py-0.5 rounded"><u>For / As for</u></span>
+                </div>
+                <div class="border-t pt-2 space-y-1.5">
+                  <div class="flex items-center justify-between">
+                    <p class="font-bold text-slate-800">"<u>Regarding</u> the venue, <u>I suggest</u> the Assembly Hall."</p>
+                    <button onclick="speakText('Regarding the venue, I suggest the Assembly Hall.')" class="px-2 py-0.5 rounded bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-bold transition">
+                      <i class="fa-solid fa-volume-high text-paw-purple"></i>
+                    </button>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <p class="font-bold text-slate-800">"<u>Concerning</u> the walkathon, <u>I suggest</u> Tsim Sha Tsui Promenade."</p>
+                    <button onclick="speakText('Concerning the walkathon, I suggest Tsim Sha Tsui Promenade.')" class="px-2 py-0.5 rounded bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-bold transition">
+                      <i class="fa-solid fa-volume-high text-paw-purple"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT 2: GIVING EXPLANATIONS -->
+      <div id="unit-content-unit2" class="unit-box hidden space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-teal-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-teal-100 text-paw-teal flex items-center justify-center text-sm font-black">2</span>
+              Giving Explanations & Reasons (給予解釋及原因)
+            </h3>
+            <span class="text-xs bg-teal-100 text-paw-teal font-bold px-3 py-1 rounded-full">VE2C Page 4-5</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Single Reasons -->
+            <div class="bg-teal-50 rounded-2xl p-4 border border-teal-200 space-y-3">
+              <h4 class="font-bold text-teal-900 text-sm">🐶 Connectors: <u>because</u> / <u>since</u> / <u>as</u></h4>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                These conjunctions are followed by a complete clause (<span class="font-bold text-slate-800">Subject + Verb</span>).
+              </p>
+              <div class="bg-white p-3 rounded-xl text-xs space-y-2 border border-teal-100">
+                <div class="flex items-center justify-between border-b pb-2">
+                  <p>"It might be a good idea to schedule the show for 26 December evening <u>since</u> it is a public holiday."</p>
+                  <button onclick="speakText('It might be a good idea to schedule the show for 26 December evening since it is a public holiday.')" class="ml-2 px-2 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-900 text-xs font-bold transition">
+                    <i class="fa-solid fa-volume-high text-paw-teal"></i>
+                  </button>
+                </div>
+                <div class="flex items-center justify-between">
+                  <p>"I suggest Yuen Long Community Centre <u>because</u> the location is convenient."</p>
+                  <button onclick="speakText('I suggest Yuen Long Community Centre because the location is convenient.')" class="ml-2 px-2 py-1 rounded-lg bg-teal-100 hover:bg-teal-200 text-teal-900 text-xs font-bold transition">
+                    <i class="fa-solid fa-volume-high text-paw-teal"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sentence Structures for Reasons -->
+            <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-2">
+              <h4 class="font-bold text-amber-900 text-sm">🐱 6 Simple Sentence Patterns for Reasons</h4>
+              <ul class="text-xs space-y-1.5 text-slate-700">
+                <li class="bg-white p-1.5 rounded-lg border border-amber-100 flex items-center justify-between">
+                  <span>1. <u>It is + Prepositional Phrase</u>: "It is in Central."</span>
+                  <button onclick="speakText('It is in Central.')" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-1.5 rounded-lg border border-amber-100 flex items-center justify-between">
+                  <span>2. <u>The location is + Adjective</u>: "The location is convenient."</span>
+                  <button onclick="speakText('The location is convenient.')" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-1.5 rounded-lg border border-amber-100 flex items-center justify-between">
+                  <span>3. <u>It can + Base Verb</u>: "It can attract more people."</span>
+                  <button onclick="speakText('It can attract more people.')" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-1.5 rounded-lg border border-amber-100 flex items-center justify-between">
+                  <span>4. <u>It has/have + Object</u>: "It has a lighting system."</span>
+                  <button onclick="speakText('It has a lighting system.')" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-1.5 rounded-lg border border-amber-100 flex items-center justify-between">
+                  <span>5. <u>It costs + Price</u>: "It costs only $100."</span>
+                  <button onclick="speakText('It costs only 100 dollars.')" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-1.5 rounded-lg border border-amber-100 flex items-center justify-between">
+                  <span>6. <u>There is/are + Subject</u>: "There are 300 seats."</span>
+                  <button onclick="speakText('There are 300 seats.')" class="px-1.5 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-bold"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Multiple Reasons Structure -->
+          <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 space-y-2">
+            <h4 class="font-bold text-purple-900 text-sm">🐾 Giving Multiple Reasons (多重原因結構)</h4>
+            <div class="p-3 bg-white rounded-xl border border-purple-100 text-xs text-slate-700 space-y-2">
+              <p class="font-bold text-paw-purple">Reasoning Intro Phrase:</p>
+              <div class="flex items-center justify-between bg-purple-50 p-2 rounded">
+                <p class="italic">"<u>Regarding</u> the location, I suggest conducting the show at JCCAC <u>for some reasons</u>." / "...<u>because of the following</u>."</p>
+                <button onclick="speakText('Regarding the location, I suggest conducting the show at JCCAC for some reasons.')" class="px-2 py-1 rounded bg-purple-200 hover:bg-purple-300 text-purple-900 text-xs font-bold">
+                  <i class="fa-solid fa-volume-high text-paw-purple"></i>
+                </button>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2">
+                <div class="bg-purple-100 p-2 rounded-xl flex items-center justify-between">
+                  <div><span class="font-bold block text-purple-800">1st Reason</span> "<u>First</u>, it is in Shek Kip Mei."</div>
+                  <button onclick="speakText('First, it is in Shek Kip Mei.')" class="px-1.5 py-1 rounded bg-purple-200 text-purple-900 text-xs font-bold"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="bg-purple-100 p-2 rounded-xl flex items-center justify-between">
+                  <div><span class="font-bold block text-purple-800">2nd Reason</span> "<u>Also</u>, it accommodates 300 people."</div>
+                  <button onclick="speakText('Also, it accommodates 300 people.')" class="px-1.5 py-1 rounded bg-purple-200 text-purple-900 text-xs font-bold"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="bg-purple-100 p-2 rounded-xl flex items-center justify-between">
+                  <div><span class="font-bold block text-purple-800">3rd Reason</span> "<u>Moreover</u>, the rental is affordable."</div>
+                  <button onclick="speakText('Moreover, the rental is affordable.')" class="px-1.5 py-1 rounded bg-purple-200 text-purple-900 text-xs font-bold"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT 3: STATING PREFERENCES -->
+      <div id="unit-content-unit3" class="unit-box hidden space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-pink-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-pink-100 text-paw-pink flex items-center justify-center text-sm font-black">3</span>
+              Stating Preferences (表達偏好)
+            </h3>
+            <span class="text-xs bg-pink-100 text-paw-pink font-bold px-3 py-1 rounded-full">VE2C Page 6</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Expressing Enjoyment -->
+            <div class="bg-pink-50 rounded-2xl p-4 border border-pink-200 space-y-3">
+              <h4 class="font-bold text-pink-900 text-sm">🐶 Expressing Enjoyment (<u>prefer ... to ...</u>)</h4>
+              <div class="bg-white p-3 rounded-xl text-xs space-y-2 border border-pink-100">
+                <div class="p-2 bg-pink-50/50 rounded-lg flex items-center justify-between">
+                  <div>
+                    <p class="font-bold text-paw-pink">Formula 1:</p>
+                    <p class="font-extrabold text-slate-800"><u>I prefer</u> [Option A] <u>to</u> [Option B]</p>
+                    <p class="text-slate-600 mt-0.5">e.g., "<u>I prefer</u> <span class="text-pink-600 font-bold">an art exhibition</span> <u>to</u> <span class="text-slate-500">a drawing competition</span>."</p>
+                  </div>
+                  <button onclick="speakText('I prefer an art exhibition to a drawing competition.')" class="px-2 py-1 rounded-lg bg-pink-100 hover:bg-pink-200 text-pink-900 text-xs font-bold transition">
+                    <i class="fa-solid fa-volume-high text-paw-pink"></i>
+                  </button>
+                </div>
+                <div class="p-2 bg-pink-50/50 rounded-lg flex items-center justify-between">
+                  <div>
+                    <p class="font-bold text-paw-pink">Formula 2 (with Gerunds):</p>
+                    <p class="font-extrabold text-slate-800"><u>I prefer</u> [Verb-ing A] <u>to</u> [Verb-ing B]</p>
+                    <p class="text-slate-600 mt-0.5">e.g., "<u>I prefer organising</u> <span class="text-pink-600 font-bold">the Tree Planting Day</span> <u>to visiting</u> <span class="text-slate-500">the Organic Farm</span>."</p>
+                  </div>
+                  <button onclick="speakText('I prefer organising the Tree Planting Day to visiting the Organic Farm.')" class="px-2 py-1 rounded-lg bg-pink-100 hover:bg-pink-200 text-pink-900 text-xs font-bold transition">
+                    <i class="fa-solid fa-volume-high text-paw-pink"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Expressing Choices -->
+            <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 space-y-3">
+              <h4 class="font-bold text-purple-900 text-sm">🐱 Expressing Choices (<u>would prefer to ...</u>)</h4>
+              <div class="bg-white p-3 rounded-xl text-xs space-y-2 border border-purple-100">
+                <div class="p-2 bg-purple-50/50 rounded-lg flex items-center justify-between">
+                  <div>
+                    <p class="font-bold text-paw-purple">Formula:</p>
+                    <p class="font-extrabold text-slate-800"><u>I would prefer to</u> + Base Verb [Option A]</p>
+                    <p class="text-slate-600 mt-0.5">e.g., "<u>I would prefer to</u> <span class="text-purple-700 font-bold">join the STEM Workshop</span>."</p>
+                  </div>
+                  <button onclick="speakText('I would prefer to join the STEM Workshop.')" class="px-2 py-1 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-bold transition">
+                    <i class="fa-solid fa-volume-high text-paw-purple"></i>
+                  </button>
+                </div>
+                <div class="p-2 bg-purple-50/50 rounded-lg flex items-center justify-between">
+                  <div>
+                    <p class="font-bold text-paw-purple">Alternative with 'like':</p>
+                    <p class="font-extrabold text-slate-800"><u>I like</u> [Option A] <u>better than</u> [Option B]</p>
+                    <p class="text-slate-600 mt-0.5">e.g., "<u>I like</u> <span class="text-purple-700 font-bold">sports days</span> <u>better than</u> <span class="text-slate-500">singing contests</span>."</p>
+                  </div>
+                  <button onclick="speakText('I like sports days better than singing contests.')" class="px-2 py-1 rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-bold transition">
+                    <i class="fa-solid fa-volume-high text-paw-purple"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT 4: ACTIVITY DESCRIPTIONS -->
+      <div id="unit-content-unit4" class="unit-box hidden space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-yellow-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-yellow-100 text-amber-800 flex items-center justify-center text-sm font-black">4</span>
+              Describing Community Activities (描述社區活動)
+            </h3>
+            <span class="text-xs bg-yellow-100 text-amber-800 font-bold px-3 py-1 rounded-full">VE2C Page 7-8</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Activity Aim -->
+            <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-2">
+              <div class="font-bold text-amber-900 text-sm flex items-center gap-1">🎯 1. Describing Activity Aim</div>
+              <ul class="text-xs space-y-2 text-slate-700">
+                <li class="bg-white p-2 rounded-xl border border-amber-100 font-medium flex items-center justify-between">
+                  <span>"<u>The aim of the activity is to</u> <span class="font-bold text-paw-orange">promote healthy living</span>."</span>
+                  <button onclick="speakText('The aim of the activity is to promote healthy living.')" class="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 text-xs"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-amber-100 font-medium flex items-center justify-between">
+                  <span>"<u>It aims to</u> <span class="font-bold text-paw-orange">reduce food waste</span>."</span>
+                  <button onclick="speakText('It aims to reduce food waste.')" class="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 text-xs"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-amber-100 font-medium flex items-center justify-between">
+                  <span>"<u>We hope to</u> <span class="font-bold text-paw-orange">promote recycling</span> through the activity."</span>
+                  <button onclick="speakText('We hope to promote recycling through the activity.')" class="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 text-xs"><i class="fa-solid fa-volume-high text-paw-orange"></i></button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Target Participants -->
+            <div class="bg-teal-50 rounded-2xl p-4 border border-teal-200 space-y-2">
+              <div class="font-bold text-teal-900 text-sm flex items-center gap-1">👥 2. Target Participants</div>
+              <ul class="text-xs space-y-2 text-slate-700">
+                <li class="bg-white p-2 rounded-xl border border-teal-100 font-medium flex items-center justify-between">
+                  <span>"<u>The target participants are</u> <span class="font-bold text-paw-teal">school children</span>."</span>
+                  <button onclick="speakText('The target participants are school children.')" class="ml-1 px-1.5 py-0.5 rounded bg-teal-100 text-teal-900 text-xs"><i class="fa-solid fa-volume-high text-paw-teal"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-teal-100 font-medium flex items-center justify-between">
+                  <span>"<u>It is suitable for</u> <span class="font-bold text-paw-teal">all local residents</span>."</span>
+                  <button onclick="speakText('It is suitable for all local residents.')" class="ml-1 px-1.5 py-0.5 rounded bg-teal-100 text-teal-900 text-xs"><i class="fa-solid fa-volume-high text-paw-teal"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-teal-100 font-medium flex items-center justify-between">
+                  <span>"<u>We welcome</u> <span class="font-bold text-paw-teal">members of our centre</span>."</span>
+                  <button onclick="speakText('We welcome members of our centre.')" class="ml-1 px-1.5 py-0.5 rounded bg-teal-100 text-teal-900 text-xs"><i class="fa-solid fa-volume-high text-paw-teal"></i></button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Activity Content -->
+            <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 space-y-2">
+              <div class="font-bold text-purple-900 text-sm flex items-center gap-1">📌 3. Activity Content</div>
+              <ul class="text-xs space-y-2 text-slate-700">
+                <li class="bg-white p-2 rounded-xl border border-purple-100 font-medium flex items-center justify-between">
+                  <span>"<u>The activity will include</u> basic gardening workshops."</span>
+                  <button onclick="speakText('The activity will include basic gardening workshops.')" class="ml-1 px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 text-xs"><i class="fa-solid fa-volume-high text-paw-purple"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-purple-100 font-medium flex items-center justify-between">
+                  <span>"<u>The participants will join</u> a visit to Tai Po Fishing Village."</span>
+                  <button onclick="speakText('The participants will join a visit to Tai Po Fishing Village.')" class="ml-1 px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 text-xs"><i class="fa-solid fa-volume-high text-paw-purple"></i></button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT 5: GIVING ELABORATIONS -->
+      <div id="unit-content-unit5" class="unit-box hidden space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-purple-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-purple-100 text-paw-purple flex items-center justify-center text-sm font-black">5</span>
+              Giving Elaborations (詳細說明與補充)
+            </h3>
+            <span class="text-xs bg-purple-100 text-paw-purple font-bold px-3 py-1 rounded-full">VE2C Page 9-10</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Using Adjectives -->
+            <div class="bg-purple-50 rounded-2xl p-4 border border-purple-200 space-y-2">
+              <h4 class="font-bold text-purple-900 text-sm">🐶 1. Using Adjectives</h4>
+              <p class="text-xs text-slate-600">Describe the nature of the activity before a noun phrase:</p>
+              <div class="bg-white p-2.5 rounded-xl text-xs space-y-2 border border-purple-100 font-medium">
+                <div class="flex items-center justify-between">
+                  <span>"It is an <u>educational</u> activity."</span>
+                  <button onclick="speakText('It is an educational activity.')" class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 text-xs"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span>"This <u>meaningful</u> walkathon aims to raise funds."</span>
+                  <button onclick="speakText('This meaningful walkathon aims to raise funds.')" class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-900 text-xs"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Relative Clauses -->
+            <div class="bg-teal-50 rounded-2xl p-4 border border-teal-200 space-y-2">
+              <h4 class="font-bold text-teal-900 text-sm">🐱 2. Using Relative Clauses</h4>
+              <p class="text-xs text-slate-600">Provide details about participants using <span class="font-bold">who</span>:</p>
+              <div class="bg-white p-2.5 rounded-xl text-xs space-y-2 border border-teal-100 font-medium">
+                <div class="flex items-center justify-between">
+                  <span>"...suitable for students <u>who are interested in science</u>."</span>
+                  <button onclick="speakText('suitable for students who are interested in science')" class="px-1.5 py-0.5 rounded bg-teal-100 text-teal-900 text-xs"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span>"...suitable for residents <u>who are keen on outdoor sports</u>."</span>
+                  <button onclick="speakText('suitable for residents who are keen on outdoor sports')" class="px-1.5 py-0.5 rounded bg-teal-100 text-teal-900 text-xs"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- First Conditional -->
+            <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-2">
+              <h4 class="font-bold text-amber-900 text-sm">🐾 3. Using First Conditional</h4>
+              <p class="text-xs text-slate-600">Elaborate content (<u>If + Present Simple, will + Verb</u>):</p>
+              <div class="bg-white p-2.5 rounded-xl text-xs space-y-2 border border-amber-100 font-medium">
+                <div class="flex items-center justify-between">
+                  <span>"<u>If</u> colleagues join this activity, they <u>will receive</u> a souvenir."</span>
+                  <button onclick="speakText('If colleagues join this activity, they will receive a souvenir.')" class="px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 text-xs"><i class="fa-solid fa-volume-high"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT 6: MAKING OFFERS -->
+      <div id="unit-content-unit6" class="unit-box hidden space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-orange-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-orange-100 text-paw-orange flex items-center justify-center text-sm font-black">6</span>
+              Making Offers (主動提供協助)
+            </h3>
+            <span class="text-xs bg-orange-100 text-paw-orange font-bold px-3 py-1 rounded-full">VE2C Page 11</span>
+          </div>
+
+          <div class="bg-amber-50/80 rounded-2xl p-5 border border-amber-200 space-y-3">
+            <h4 class="font-bold text-amber-900 text-sm">🐶 Modal Verbs for Offers (Followed by Base Form Verb)</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div class="bg-white p-3 rounded-xl border border-amber-200 text-xs space-y-2">
+                <span class="bg-orange-100 text-paw-orange font-bold px-2 py-0.5 rounded text-[11px]"><u>Shall I ...?</u></span>
+                <p class="font-semibold text-slate-800">"<u>Shall I</u> create a post on social media to reach a wider audience?"</p>
+                <button onclick="speakText('Shall I create a post on social media to reach a wider audience?')" class="w-full py-1 rounded bg-orange-100 hover:bg-orange-200 text-paw-orange font-bold text-xs flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-volume-high"></i> Listen Audio
+                </button>
+              </div>
+              <div class="bg-white p-3 rounded-xl border border-amber-200 text-xs space-y-2">
+                <span class="bg-teal-100 text-paw-teal font-bold px-2 py-0.5 rounded text-[11px]"><u>Would you like me to ...?</u></span>
+                <p class="font-semibold text-slate-800">"<u>Would you like me to</u> contact group members to collect their ideas?"</p>
+                <button onclick="speakText('Would you like me to contact group members to collect their ideas?')" class="w-full py-1 rounded bg-teal-100 hover:bg-teal-200 text-paw-teal font-bold text-xs flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-volume-high"></i> Listen Audio
+                </button>
+              </div>
+              <div class="bg-white p-3 rounded-xl border border-amber-200 text-xs space-y-2">
+                <span class="bg-purple-100 text-paw-purple font-bold px-2 py-0.5 rounded text-[11px]"><u>I could ...</u></span>
+                <p class="font-semibold text-slate-800">"<u>I could</u> email the venue manager to reserve and confirm the venue."</p>
+                <button onclick="speakText('I could email the venue manager to reserve and confirm the venue.')" class="w-full py-1 rounded bg-purple-100 hover:bg-purple-200 text-paw-purple font-bold text-xs flex items-center justify-center gap-1">
+                  <i class="fa-solid fa-volume-high"></i> Listen Audio
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UNIT 7: EMAIL EXPRESSIONS -->
+      <div id="unit-content-unit7" class="unit-box hidden space-y-6">
+        <div class="bg-white rounded-3xl p-6 border-2 border-indigo-200 shadow-sm space-y-4">
+          <div class="flex justify-between items-center border-b pb-3">
+            <h3 class="text-xl font-display font-bold text-paw-dark flex items-center gap-2">
+              <span class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-sm font-black">7</span>
+              Common Expressions in Email Replies (回覆電郵常用語)
+            </h3>
+            <span class="text-xs bg-indigo-100 text-indigo-700 font-bold px-3 py-1 rounded-full">VE2C Page 12-13</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Salutation & Acknowledge -->
+            <div class="bg-indigo-50 rounded-2xl p-4 border border-indigo-200 space-y-2">
+              <h4 class="font-bold text-indigo-900 text-sm">✉️ 1. Opening & Acknowledging</h4>
+              <ul class="text-xs space-y-1.5 text-slate-700">
+                <li class="bg-white p-2 rounded-xl border border-indigo-100 font-semibold flex items-center justify-between">
+                  <span>"<u>Dear Chris / Dear Mr Wong,</u>"</span>
+                  <button onclick="speakText('Dear Chris, Dear Mr Wong,')" class="px-1.5 py-0.5 bg-indigo-100 text-indigo-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-indigo-100 flex items-center justify-between">
+                  <span>"<u>Thank you very much for your email concerning</u> the charity events."</span>
+                  <button onclick="speakText('Thank you very much for your email concerning the charity events.')" class="px-1.5 py-0.5 bg-indigo-100 text-indigo-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-indigo-100 flex items-center justify-between">
+                  <span>"<u>In response to your email, I would like to</u> state my preference."</span>
+                  <button onclick="speakText('In response to your email, I would like to state my preference.')" class="px-1.5 py-0.5 bg-indigo-100 text-indigo-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Purpose of writing -->
+            <div class="bg-teal-50 rounded-2xl p-4 border border-teal-200 space-y-2">
+              <h4 class="font-bold text-teal-900 text-sm">🎯 2. Purpose of Writing</h4>
+              <ul class="text-xs space-y-1.5 text-slate-700">
+                <li class="bg-white p-2 rounded-xl border border-teal-100 font-semibold flex items-center justify-between">
+                  <span>"<u>I am writing to state my preference and make suggestions.</u>"</span>
+                  <button onclick="speakText('I am writing to state my preference and make suggestions.')" class="px-1.5 py-0.5 bg-teal-100 text-teal-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-teal-100 font-semibold flex items-center justify-between">
+                  <span>"<u>I am writing to introduce the details of</u> our upcoming walkathon."</span>
+                  <button onclick="speakText('I am writing to introduce the details of our upcoming walkathon.')" class="px-1.5 py-0.5 bg-teal-100 text-teal-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Closing Lines -->
+            <div class="bg-amber-50 rounded-2xl p-4 border border-amber-200 space-y-2">
+              <h4 class="font-bold text-amber-900 text-sm">👋 3. Closing Expressions</h4>
+              <ul class="text-xs space-y-1.5 text-slate-700">
+                <li class="bg-white p-2 rounded-xl border border-amber-100 font-semibold flex items-center justify-between">
+                  <span>"<u>I hope my ideas are useful.</u>"</span>
+                  <button onclick="speakText('I hope my ideas are useful.')" class="px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-amber-100 font-semibold flex items-center justify-between">
+                  <span>"<u>I look forward to discussing these ideas further with you.</u>"</span>
+                  <button onclick="speakText('I look forward to discussing these ideas further with you.')" class="px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+                <li class="bg-white p-2 rounded-xl border border-amber-100 font-semibold flex items-center justify-between">
+                  <span>"<u>Please feel free to contact me if you need more information.</u>"</span>
+                  <button onclick="speakText('Please feel free to contact me if you need more information.')" class="px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded"><i class="fa-solid fa-volume-high"></i></button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 2: DRILLING EXERCISES ================= -->
+    <section id="section-drills" class="hidden space-y-6">
+      
+      <!-- Drill Category Navigation Tabs -->
+      <div class="bg-white p-2 rounded-2xl border border-amber-200 shadow-sm flex flex-wrap gap-2">
+        <button onclick="switchDrill('mcq')" id="drill-tab-mcq" class="drill-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-paw-orange text-white flex items-center gap-1.5">
+          <i class="fa-solid fa-list-check"></i> Multiple Choice
+        </button>
+        <button onclick="switchDrill('drag')" id="drill-tab-drag" class="drill-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-100 flex items-center gap-1.5">
+          <i class="fa-solid fa-hand-pointer"></i> Drag & Drop Matching
+        </button>
+        <button onclick="switchDrill('fill')" id="drill-tab-fill" class="drill-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-100 flex items-center gap-1.5">
+          <i class="fa-solid fa-pen-to-square"></i> Fill-in-the-Blanks
+        </button>
+        <button onclick="switchDrill('unscramble')" id="drill-tab-unscramble" class="drill-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-100 flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-down-short-wide"></i> Word Order Unscramble
+        </button>
+      </div>
+
+      <!-- DRILL TYPE 1: MULTIPLE CHOICE EXERCISES -->
+      <div id="drill-box-mcq" class="drill-container space-y-4">
+        <div class="bg-white p-6 rounded-3xl border-2 border-orange-200 shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-lg font-display font-bold text-paw-dark">
+              🐶 Multiple Choice Drills (Choose the correct structure)
+            </h3>
+            <span class="text-xs bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full">5 Questions</span>
+          </div>
+
+          <div id="mcqContainer" class="space-y-6">
+            <!-- Dynamic MCQ items generated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- DRILL TYPE 2: DRAG & DROP MATCHING -->
+      <div id="drill-box-drag" class="drill-container hidden space-y-4">
+        <div class="bg-white p-6 rounded-3xl border-2 border-teal-200 shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-lg font-display font-bold text-paw-dark">
+              🐱 Drag & Drop Matching (Match Sentence Starters to Function Types)
+            </h3>
+            <span class="text-xs bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-full">Interactive Drag</span>
+          </div>
+
+          <p class="text-xs text-slate-600 font-medium">
+            Drag the colorful expression pill on the left and drop it into the matching target category box on the right!
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Draggable Source Elements -->
+            <div class="bg-amber-50/70 p-4 rounded-2xl border border-amber-200 space-y-3">
+              <h4 class="font-bold text-xs uppercase text-amber-900 tracking-wider">Drag Items:</h4>
+              <div id="dragSourceContainer" class="flex flex-col gap-2">
+                <div draggable="true" ondragstart="handleDragStart(event)" id="drag-1" data-target="suggest" class="p-3 bg-white rounded-xl border-2 border-amber-300 font-bold text-xs text-amber-900 shadow-sm cursor-grab active:cursor-grabbing hover:bg-amber-100 transition">
+                  "Regarding the date, I suggest 21 May..."
+                </div>
+                <div draggable="true" ondragstart="handleDragStart(event)" id="drag-2" data-target="explain" class="p-3 bg-white rounded-xl border-2 border-teal-300 font-bold text-xs text-teal-900 shadow-sm cursor-grab active:cursor-grabbing hover:bg-teal-100 transition">
+                  "...since it falls on a weekend and attracts more people."
+                </div>
+                <div draggable="true" ondragstart="handleDragStart(event)" id="drag-3" data-target="prefer" class="p-3 bg-white rounded-xl border-2 border-pink-300 font-bold text-xs text-pink-900 shadow-sm cursor-grab active:cursor-grabbing hover:bg-pink-100 transition">
+                  "I would prefer to hold a Charity Walkathon..."
+                </div>
+                <div draggable="true" ondragstart="handleDragStart(event)" id="drag-4" data-target="offer" class="p-3 bg-white rounded-xl border-2 border-purple-300 font-bold text-xs text-purple-900 shadow-sm cursor-grab active:cursor-grabbing hover:bg-purple-100 transition">
+                  "Would you like me to contact our business partners?"
+                </div>
+              </div>
+            </div>
+
+            <!-- Target Drop Zones -->
+            <div class="space-y-3">
+              <div ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'suggest')" class="drop-zone p-4 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 min-h-[70px] flex flex-col justify-center transition">
+                <span class="text-xs font-bold text-slate-500 uppercase">Drop Zone A: Making Suggestions 💡</span>
+                <div class="dropped-target-content mt-1"></div>
+              </div>
+              <div ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'explain')" class="drop-zone p-4 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 min-h-[70px] flex flex-col justify-center transition">
+                <span class="text-xs font-bold text-slate-500 uppercase">Drop Zone B: Giving Explanations 💬</span>
+                <div class="dropped-target-content mt-1"></div>
+              </div>
+              <div ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'prefer')" class="drop-zone p-4 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 min-h-[70px] flex flex-col justify-center transition">
+                <span class="text-xs font-bold text-slate-500 uppercase">Drop Zone C: Stating Preferences ❤️</span>
+                <div class="dropped-target-content mt-1"></div>
+              </div>
+              <div ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'offer')" class="drop-zone p-4 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 min-h-[70px] flex flex-col justify-center transition">
+                <span class="text-xs font-bold text-slate-500 uppercase">Drop Zone D: Making Offers 🤝</span>
+                <div class="dropped-target-content mt-1"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DRILL TYPE 3: FILL-IN-THE-BLANKS -->
+      <div id="drill-box-fill" class="drill-container hidden space-y-4">
+        <div class="bg-white p-6 rounded-3xl border-2 border-purple-200 shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-lg font-display font-bold text-paw-dark">
+              🐾 Fill-in-the-Blanks (Grammar & Verb Form Drills)
+            </h3>
+            <button onclick="checkFillAnswers()" class="px-4 py-1.5 rounded-xl bg-paw-purple text-white text-xs font-bold hover:bg-purple-700 transition">
+              Check Answers
+            </button>
+          </div>
+
+          <div id="fillContainer" class="space-y-4 text-xs sm:text-sm font-medium leading-relaxed">
+            <!-- Dynamic fill blanks generated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- DRILL TYPE 4: REARRANGE WORD ORDER -->
+      <div id="drill-box-unscramble" class="drill-container hidden space-y-4">
+        <div class="bg-white p-6 rounded-3xl border-2 border-pink-200 shadow-sm space-y-6">
+          <div class="flex items-center justify-between border-b pb-3">
+            <h3 class="text-lg font-display font-bold text-paw-dark">
+              🐶 Word Order Unscramble (Click blocks to assemble full sentence)
+            </h3>
+            <span class="text-xs bg-pink-100 text-paw-pink font-bold px-3 py-1 rounded-full">Sentence Builder</span>
+          </div>
+
+          <div id="unscrambleContainer" class="space-y-6">
+            <!-- Dynamic unscramble items generated by JS -->
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= SECTION 3: FINAL MASTERY TEST ================= -->
+    <section id="section-quiz" class="hidden max-w-3xl mx-auto space-y-6">
+      
+      <!-- Quiz Start Screen -->
+      <div id="quiz-start-box" class="bg-white rounded-3xl border-3 border-amber-300 p-8 text-center shadow-lg space-y-6">
+        <div class="w-24 h-24 bg-gradient-to-tr from-paw-orange to-paw-yellow rounded-3xl flex items-center justify-center mx-auto text-4xl shadow-md text-white transform -rotate-3">
+          🐶
+        </div>
+        <div class="space-y-2">
+          <h2 class="text-2xl font-display font-bold text-paw-dark">VE2C Language Focus Mastery Test</h2>
+          <p class="text-slate-600 text-sm max-w-md mx-auto">
+            Check your understanding of making suggestions, explanations, preferences, activity descriptions, elaborations, offers, and email replies!
+          </p>
+        </div>
+
+        <div class="max-w-xs mx-auto text-left space-y-2">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Student Name / Class</label>
+          <input type="text" id="quizStudentName" placeholder="e.g. Alex Chan (Junior Sec 2)" class="w-full px-4 py-3 bg-amber-50/50 border-2 border-amber-200 rounded-xl font-bold text-slate-800 outline-none focus:border-paw-orange text-sm">
+        </div>
+
+        <button onclick="startMasteryQuiz()" class="w-full sm:w-auto px-8 py-3.5 bg-paw-orange hover:bg-orange-600 text-white font-display font-bold text-base rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2 mx-auto">
+          <i class="fa-solid fa-paw"></i> Start Mastery Test
+        </button>
+      </div>
+
+      <!-- Active Quiz Card -->
+      <div id="quiz-active-box" class="hidden bg-white rounded-3xl border-2 border-amber-200 shadow-xl overflow-hidden">
+        <div class="bg-paw-dark text-white px-6 py-4 flex justify-between items-center">
+          <div class="flex items-center gap-3">
+            <span class="bg-paw-orange text-xs font-bold px-3 py-1 rounded-full" id="quizQCount">Q 1/10</span>
+            <span class="text-xs text-amber-200 font-medium" id="quizStudentTag">Student</span>
+          </div>
+          <div class="text-paw-yellow font-bold text-sm flex items-center gap-1">
+            <i class="fa-solid fa-star"></i> Score: <span id="quizCurrentScore">0</span>
+          </div>
+        </div>
+
+        <div class="w-full bg-slate-100 h-2">
+          <div id="quizProgressBar" class="bg-paw-orange h-2 transition-all duration-300" style="width: 10%"></div>
+        </div>
+
+        <div class="p-6 sm:p-8 space-y-6">
+          <div class="space-y-2">
+            <span id="quizTopicTag" class="inline-block bg-orange-100 text-paw-orange font-bold text-xs px-3 py-1 rounded-full">
+              🐾 Topic: Making Suggestions
+            </span>
+            <h3 id="quizQuestionText" class="text-lg sm:text-xl font-display font-bold leading-relaxed text-paw-dark">
+              Question loading...
+            </h3>
+          </div>
+
+          <div id="quizOptionsGrid" class="grid grid-cols-1 gap-3">
+            <!-- Dynamic Options -->
+          </div>
+
+          <div id="quizFeedbackBox" class="hidden p-4 rounded-2xl border text-xs sm:text-sm font-medium"></div>
+
+          <div class="flex justify-end">
+            <button id="quizNextBtn" onclick="nextQuizQuestion()" class="hidden px-6 py-2.5 bg-paw-dark hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5">
+              <span>Next Question</span> <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test Certificate & Results -->
+      <div id="quiz-result-box" class="hidden bg-white rounded-3xl border-3 border-paw-orange p-8 text-center shadow-xl space-y-6">
+        <div id="certBadge" class="w-20 h-20 rounded-2xl bg-amber-100 text-paw-orange flex items-center justify-center mx-auto text-4xl shadow-md border-2 border-amber-300">
+          🏆
+        </div>
+
+        <div class="space-y-1">
+          <h2 class="text-2xl font-display font-bold text-paw-dark" id="certTitle">Congratulations!</h2>
+          <p class="text-xs text-slate-500" id="certStudentSub">Mastery Test Completed</p>
+        </div>
+
+        <!-- Certificate Container -->
+        <div class="bg-amber-50/70 border-2 border-dashed border-amber-300 p-6 rounded-2xl max-w-md mx-auto space-y-3 relative overflow-hidden">
+          <p class="text-xs font-bold uppercase tracking-wider text-amber-800">Pawsome English Achievement Certificate</p>
+          <div class="text-3xl font-display font-extrabold text-paw-orange" id="finalCertScore">90 / 100</div>
+          <p class="text-xs font-bold text-slate-700" id="finalCertRank">Top Pet Scholar 🐱</p>
+          <p class="text-[11px] text-slate-500 italic">"Demonstrated excellent command of junior secondary vocational email writing sentence patterns!"</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-3">
+          <button onclick="restartQuiz()" class="px-6 py-3 bg-paw-orange text-white font-bold rounded-xl text-xs hover:bg-orange-600 transition shadow">
+            <i class="fa-solid fa-rotate-right mr-1"></i> Retake Test
+          </button>
+          <button onclick="switchMainTab('learn')" class="px-6 py-3 bg-paw-dark text-white font-bold rounded-xl text-xs hover:bg-slate-800 transition shadow">
+            <i class="fa-solid fa-book-open mr-1"></i> Review Language Units
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- CLASSROOM TOOLS MODAL (FOR TEACHER MODE) -->
+  <div id="classroomModal" class="fixed inset-0 bg-paw-dark/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 border-3 border-amber-300 shadow-2xl space-y-5">
+      <div class="flex justify-between items-center border-b pb-3">
+        <h3 class="font-display font-bold text-lg text-paw-dark flex items-center gap-2">
+          👩‍🏫 Classroom Teaching Assistant Tools
+        </h3>
+        <button onclick="closeClassroomTools()" class="text-slate-400 hover:text-slate-600 text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Tool 1: Classroom Timer -->
+      <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-3">
+        <div class="flex justify-between items-center">
+          <span class="font-bold text-xs text-amber-900">⏱️ Practice Countdown Timer</span>
+          <span id="timerDisplay" class="font-mono font-bold text-lg text-paw-orange">02:00</span>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="setTimer(60)" class="flex-1 py-1.5 bg-white text-xs font-bold border rounded-lg hover:bg-amber-100">1 Min</button>
+          <button onclick="setTimer(120)" class="flex-1 py-1.5 bg-white text-xs font-bold border rounded-lg hover:bg-amber-100">2 Min</button>
+          <button onclick="setTimer(300)" class="flex-1 py-1.5 bg-white text-xs font-bold border rounded-lg hover:bg-amber-100">5 Min</button>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="startTimer()" class="flex-1 py-2 bg-paw-orange text-white text-xs font-bold rounded-xl">Start Timer</button>
+          <button onclick="stopTimer()" class="flex-1 py-2 bg-slate-200 text-slate-700 text-xs font-bold rounded-xl">Pause</button>
+        </div>
+      </div>
+
+      <!-- Tool 2: Random Student Name Picker -->
+      <div class="bg-teal-50 p-4 rounded-2xl border border-teal-200 space-y-3">
+        <span class="font-bold text-xs text-teal-900 block">🎲 Random Student Answer Picker</span>
+        <div class="flex gap-2">
+          <input type="text" id="pickerInput" placeholder="Names (e.g. Alex, Ben, Chris, Dora)" value="Alex, Ben, Chris, Dora, Emily, Felix, Grace, Harry" class="flex-1 px-3 py-1.5 bg-white border text-xs rounded-xl">
+          <button onclick="pickRandomStudent()" class="px-4 py-1.5 bg-paw-teal text-white text-xs font-bold rounded-xl">Pick!</button>
+        </div>
+        <div id="pickedStudentResult" class="p-3 bg-white rounded-xl text-center font-bold text-paw-teal text-sm border border-teal-100">
+          Click "Pick!" to choose a student to answer
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-paw-dark text-slate-300 text-xs py-6 border-t-4 border-paw-orange mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+      <p class="font-bold text-white">VE2C Language Focus Learning Hub • Junior Secondary Vocational English</p>
+      <p class="text-slate-400">Designed for Interactive Classroom Teaching & Self-Revision • Lovely Dog & Cat Pet Edition 🐶🐱</p>
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT ENGINE -->
+  <script>
+    // ================= DATA DATABASE FOR EXERCISES =================
+    const mcqQuestions = [
+      {
+        q: "Which sentence correctly uses 'suggest' to make a proposal for a venue?",
+        options: [
+          "I suggest to hold the event at Grand Theatre.",
+          "I suggest organising the concert at the Grand Theatre.",
+          "I suggest we should to organise the concert at the Grand Theatre.",
+          "I suggest for the Grand Theatre."
+        ],
+        ans: 1,
+        exp: "After 'suggest', we use a noun phrase, gerund (verb-ing), or a that-clause ('suggest that we should organise'). Pattern: 'suggest + gerund'."
+      },
+      {
+        q: "Choose the correct phrase to introduce a reason for a venue choice:",
+        options: [
+          "Regarding the date, I suggest 21 May since it is convenient.",
+          "For the venue, I suggest JCCAC because of it is in Shek Kip Mei.",
+          "Regarding the venue, I suggest the Cultural Centre for some reasons.",
+          "I suggest the hall because to attract more people."
+        ],
+        ans: 2,
+        exp: "'for some reasons' introduces multiple explanations. 'because of' is followed by a noun, not a full clause."
+      },
+      {
+        q: "How do you express a choice between two activities using 'prefer'?",
+        options: [
+          "I prefer hold a walkathon than a garage sale.",
+          "I prefer holding a walkathon to a garage sale.",
+          "I prefer to holding a walkathon than a garage sale.",
+          "I prefer hold a walkathon to hold a garage sale."
+        ],
+        ans: 1,
+        exp: "The correct structure is: 'prefer (verb-ing) A to (verb-ing) B'."
+      },
+      {
+        q: "Select the sentence that correctly describes the AIM of an activity:",
+        options: [
+          "The target participants are school children.",
+          "The activity will include a visit to Tai Po Fishing Village.",
+          "The aim of the activity is to reduce food waste.",
+          "We welcome all local residents."
+        ],
+        ans: 2,
+        exp: "'The aim of the activity is to [verb]' or 'It aims to [verb]' describes activity goals."
+      },
+      {
+        q: "Which modal verb structure correctly makes an offer to help?",
+        options: [
+          "Would you like me contacting the group members?",
+          "Would you like me to contact the group members?",
+          "Shall I to contact the group members?",
+          "I could contacting the group members."
+        ],
+        ans: 1,
+        exp: "The correct structure is 'Would you like me TO + base verb'."
+      }
+    ];
+
+    const fillBlanksData = [
+      {
+        text: "1. For the date, I suggest 21 May because it <input type='text' id='fill-0' data-ans='falls' class='fill-input px-2 py-1 border rounded font-bold text-paw-orange w-24 text-center'> on a weekend and it can <input type='text' id='fill-1' data-ans='attract' class='fill-input px-2 py-1 border rounded font-bold text-paw-orange w-24 text-center'> more people.",
+        hint: "Verbs: fall / attract"
+      },
+      {
+        text: "2. I would prefer <input type='text' id='fill-2' data-ans='to organise' class='fill-input px-2 py-1 border rounded font-bold text-paw-orange w-28 text-center'> (organise) a Local History Tour.",
+        hint: "Structure: would prefer + to-infinitive"
+      },
+      {
+        text: "3. The event is suitable for secondary school students who <input type='text' id='fill-3' data-ans='are' class='fill-input px-2 py-1 border rounded font-bold text-paw-orange w-20 text-center'> interested in science.",
+        hint: "Relative clause relative verb"
+      },
+      {
+        text: "4. <input type='text' id='fill-4' data-ans='Shall' class='fill-input px-2 py-1 border rounded font-bold text-paw-orange w-20 text-center'> I prepare newsletters to promote the upcoming events?",
+        hint: "Modal verb for offering help"
+      }
+    ];
+
+    const unscrambleData = [
+      {
+        target: "Regarding the venue , I suggest organising the concert at Grand Theatre .",
+        words: ["Regarding", "the venue ,", "I suggest", "organising", "the concert", "at Grand Theatre ."]
+      },
+      {
+        target: "I would prefer to hold a Tree Planting Day .",
+        words: ["I would", "prefer to", "hold a", "Tree Planting Day ."]
+      },
+      {
+        target: "Would you like me to send invitation emails ?",
+        words: ["Would you", "like me to", "send invitation", "emails ?"]
+      }
+    ];
+
+    const masteryTestQuestions = [
+      {
+        topic: "Unit 1: Making Suggestions",
+        q: "Complete the suggestion: 'Concerning the venue, I suggest _____ the concert at the Assembly Hall.'",
+        opts: ["organise", "organising", "to organising", "organised"],
+        ans: 1,
+        exp: "After 'suggest', use gerund (verb-ing)."
+      },
+      {
+        topic: "Unit 1: Making Suggestions",
+        q: "Which modal pattern is correct for suggesting an idea?",
+        opts: ["It might be a good idea to schedule the show for Friday.", "It might be a good idea scheduling the show for Friday.", "It might be a good idea schedule the show for Friday.", "It might be a good idea for schedule the show for Friday."],
+        ans: 0,
+        exp: "'It might be a good idea to + base verb'."
+      },
+      {
+        topic: "Unit 2: Giving Explanations",
+        q: "Find the sentence with the correct reason connector:",
+        opts: ["I suggest Central because of it is near the MTR.", "I suggest Central since it is near the MTR.", "I suggest Central as for it is near the MTR.", "I suggest Central because to it is near the MTR."],
+        ans: 1,
+        exp: "'since' and 'because' are followed by a clause (Subject + Verb)."
+      },
+      {
+        topic: "Unit 3: Stating Preferences",
+        q: "Express preference: 'I prefer _____ an art exhibition to a drawing competition.'",
+        opts: ["holding", "hold", "to holding", "held"],
+        ans: 0,
+        exp: "'prefer + verb-ing A to B'."
+      },
+      {
+        topic: "Unit 4: Activity Descriptions",
+        q: "Which sentence describes target participants?",
+        opts: ["The aim is to promote green living.", "The activity will include basic workshops.", "The target participants are all local residents.", "I hope to raise funds."],
+        ans: 2,
+        exp: "'The target participants are...' specifies target audience."
+      },
+      {
+        topic: "Unit 5: Giving Elaborations",
+        q: "Complete the first conditional: 'If colleagues join this activity, they _____ a souvenir.'",
+        opts: ["receive", "will receive", "received", "would received"],
+        ans: 1,
+        exp: "First conditional formula: If + Present Simple, will + Base Verb."
+      },
+      {
+        topic: "Unit 6: Making Offers",
+        q: "Which sentence is a polite offer using modal verbs?",
+        opts: ["Shall I create a post on social media?", "I suggest creating a post on social media.", "Regarding social media, I suggest a post.", "I prefer social media posts."],
+        ans: 0,
+        exp: "'Shall I + base verb...?' is a modal offer."
+      },
+      {
+        topic: "Unit 7: Email Expressions",
+        q: "Select a proper acknowledgment line for replying to an email:",
+        opts: ["I am writing to state my preference.", "Thank you very much for your email regarding the charity events.", "I hope my ideas are useful.", "Please feel free to contact me."],
+        ans: 1,
+        exp: "'Thank you very much for your email regarding...' acknowledges receipt."
+      },
+      {
+        topic: "Unit 7: Email Expressions",
+        q: "Which expression is appropriate for closing an email when offering help?",
+        opts: ["Please let me know if I can provide any further help.", "Dear Mr Wong,", "With reference to your email,", "I suggest the Grand Theatre."],
+        ans: 0,
+        exp: "'Please let me know if I can provide any further help' is a polite closing line."
+      },
+      {
+        topic: "Unit 4 & 5: Elaborating Content",
+        q: "Which sentence uses a relative clause to describe participants?",
+        opts: ["It is suitable for students who are interested in engineering.", "It is an educational activity.", "The aim is to learn history.", "We hope to reduce waste."],
+        ans: 0,
+        exp: "'who are interested in engineering' is a relative clause."
+      }
+    ];
+
+    // ================= APP STATE =================
+    let isTeacherMode = false;
+    let timerInterval = null;
+    let timerSeconds = 120;
+
+    // Quiz State
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let studentName = "";
+
+    // ================= INITIALIZATION =================
+    window.onload = function() {
+      renderMCQDrills();
+      renderFillBlanksDrills();
+      renderUnscrambleDrills();
+    };
+
+    // Main Tab Switching
+    function switchMainTab(tab) {
+      document.getElementById('section-learn').classList.add('hidden');
+      document.getElementById('section-drills').classList.add('hidden');
+      document.getElementById('section-quiz').classList.add('hidden');
+
+      document.getElementById('main-nav-learn').className = "px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold text-slate-600 hover:bg-orange-50 transition flex items-center gap-1.5";
+      document.getElementById('main-nav-drills').className = "px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold text-slate-600 hover:bg-orange-50 transition flex items-center gap-1.5";
+      document.getElementById('main-nav-quiz').className = "px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold text-slate-600 hover:bg-orange-50 transition flex items-center gap-1.5";
+
+      if (tab === 'learn') {
+        document.getElementById('section-learn').classList.remove('hidden');
+        document.getElementById('main-nav-learn').className = "tab-active px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5";
+      } else if (tab === 'drills') {
+        document.getElementById('section-drills').classList.remove('hidden');
+        document.getElementById('main-nav-drills').className = "tab-active px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5";
+      } else if (tab === 'quiz') {
+        document.getElementById('section-quiz').classList.remove('hidden');
+        document.getElementById('main-nav-quiz').className = "tab-active px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-display font-bold transition flex items-center gap-1.5";
+      }
+    }
+
+    // Unit Sub-tab Switching
+    function switchUnit(unitId) {
+      document.querySelectorAll('.unit-box').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.unit-tab').forEach(el => {
+        el.className = "unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-orange-100 transition flex-shrink-0 flex items-center gap-2 border border-slate-200";
+      });
+
+      document.getElementById(`unit-content-${unitId}`).classList.remove('hidden');
+      document.getElementById(`unit-tab-${unitId}`).className = "unit-tab px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-paw-orange text-white shadow-sm flex-shrink-0 flex items-center gap-2";
+    }
+
+    // Drill Sub-tab Switching
+    function switchDrill(drillId) {
+      document.querySelectorAll('.drill-container').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.drill-tab').forEach(el => {
+        el.className = "drill-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-slate-100 text-slate-700 hover:bg-orange-100 flex items-center gap-1.5";
+      });
+
+      document.getElementById(`drill-box-${drillId}`).classList.remove('hidden');
+      document.getElementById(`drill-tab-${drillId}`).className = "drill-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-paw-orange text-white flex items-center gap-1.5";
+    }
+
+    // ================= TEACHER MODE ENGINE =================
+    function toggleTeacherMode() {
+      isTeacherMode = !isTeacherMode;
+      const banner = document.getElementById('teacherBanner');
+      const text = document.getElementById('teacherModeText');
+
+      if (isTeacherMode) {
+        banner.classList.remove('hidden');
+        text.innerText = "Teacher Mode: ON";
+        document.body.classList.add('text-base');
+      } else {
+        banner.classList.add('hidden');
+        text.innerText = "Teacher Mode: OFF";
+        document.body.classList.remove('text-base');
+      }
+    }
+
+    function openClassroomTools() {
+      document.getElementById('classroomModal').classList.remove('hidden');
+    }
+
+    function closeClassroomTools() {
+      document.getElementById('classroomModal').classList.add('hidden');
+    }
+
+    function setTimer(sec) {
+      timerSeconds = sec;
+      updateTimerDisplay();
+    }
+
+    function startTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timerSeconds > 0) {
+          timerSeconds--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          alert("⏰ Time's up for practice activity!");
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(timerSeconds / 60);
+      const secs = timerSeconds % 60;
+      document.getElementById('timerDisplay').innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function pickRandomStudent() {
+      const input = document.getElementById('pickerInput').value;
+      const names = input.split(',').map(s => s.trim()).filter(s => s.length > 0);
+      if (names.length === 0) return;
+      const picked = names[Math.floor(Math.random() * names.length)];
+      document.getElementById('pickedStudentResult').innerText = `🎉 Selected Student: ${picked}!`;
+    }
+
+    // Speech Synthesis
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // ================= DRILL RENDERERS =================
+    function renderMCQDrills() {
+      const container = document.getElementById('mcqContainer');
+      container.innerHTML = '';
+
+      mcqQuestions.forEach((item, idx) => {
+        const qBox = document.createElement('div');
+        qBox.className = "bg-amber-50/50 p-4 rounded-2xl border border-amber-200 space-y-3";
+        
+        let optsHtml = '';
+        item.options.forEach((opt, oIdx) => {
+          optsHtml += `
+            <button onclick="checkMCQAnswer(this, ${idx}, ${oIdx})" class="mcq-btn-${idx} w-full text-left p-3 rounded-xl border border-slate-200 bg-white hover:bg-orange-50 font-medium text-xs sm:text-sm text-slate-800 transition flex items-center justify-between">
+              <span><strong class="mr-2 text-paw-orange">${String.fromCharCode(65 + oIdx)}.</strong> ${opt}</span>
+            </button>
+          `;
+        });
+
+        qBox.innerHTML = `
+          <div class="font-bold text-xs sm:text-sm text-slate-900 flex items-start gap-2">
+            <span class="w-6 h-6 rounded-full bg-paw-orange text-white flex items-center justify-center text-xs flex-shrink-0">${idx + 1}</span>
+            <span>${item.q}</span>
+          </div>
+          <div class="space-y-2">
+            ${optsHtml}
+          </div>
+          <div id="mcq-exp-${idx}" class="hidden p-3 rounded-xl bg-white border border-amber-300 text-xs text-slate-700 font-medium"></div>
+        `;
+        container.appendChild(qBox);
+      });
+    }
+
+    function checkMCQAnswer(btn, qIdx, selectedOpt) {
+      const q = mcqQuestions[qIdx];
+      const buttons = document.querySelectorAll(`.mcq-btn-${qIdx}`);
+      buttons.forEach(b => b.disabled = true);
+
+      const expBox = document.getElementById(`mcq-exp-${qIdx}`);
+      expBox.classList.remove('hidden');
+
+      if (selectedOpt === q.ans) {
+        btn.className = "w-full text-left p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 font-bold text-xs sm:text-sm text-emerald-900 flex items-center justify-between";
+        btn.innerHTML += `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+        expBox.innerHTML = `<span class="font-bold text-emerald-700">✓ Correct!</span> ${q.exp}`;
+      } else {
+        btn.className = "w-full text-left p-3 rounded-xl border-2 border-red-500 bg-red-50 font-bold text-xs sm:text-sm text-red-900 flex items-center justify-between";
+        btn.innerHTML += `<i class="fa-solid fa-circle-xmark text-red-600"></i>`;
+        
+        // Highlight correct
+        buttons[q.ans].className = "w-full text-left p-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 font-bold text-xs sm:text-sm text-emerald-900 flex items-center justify-between";
+        expBox.innerHTML = `<span class="font-bold text-red-600">✗ Incorrect.</span> Correct answer is <strong>${String.fromCharCode(65 + q.ans)}</strong>. ${q.exp}`;
+      }
+    }
+
+    // DRAG AND DROP ENGINE
+    let currentDraggedId = null;
+
+    function handleDragStart(e) {
+      currentDraggedId = e.target.id;
+      e.dataTransfer.setData('text/plain', e.target.id);
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add('drop-zone-hover');
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('drop-zone-hover');
+    }
+
+    function handleDrop(e, targetCat) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drop-zone-hover');
+
+      if (!currentDraggedId) return;
+      const draggedEl = document.getElementById(currentDraggedId);
+      const expectedCat = draggedEl.dataset.target;
+
+      const targetContent = e.currentTarget.querySelector('.dropped-target-content');
+      targetContent.appendChild(draggedEl);
+
+      if (expectedCat === targetCat) {
+        draggedEl.className = "p-3 bg-emerald-100 rounded-xl border-2 border-emerald-400 font-bold text-xs text-emerald-900 shadow-sm flex items-center justify-between";
+        draggedEl.innerHTML += ` <i class="fa-solid fa-check text-emerald-600 ml-2"></i>`;
+        draggedEl.setAttribute('draggable', 'false');
+      } else {
+        draggedEl.className = "p-3 bg-red-100 rounded-xl border-2 border-red-400 font-bold text-xs text-red-900 shadow-sm";
+      }
+    }
+
+    // FILL IN BLANKS ENGINE
+    function renderFillBlanksDrills() {
+      const container = document.getElementById('fillContainer');
+      container.innerHTML = '';
+
+      fillBlanksData.forEach((item, idx) => {
+        const row = document.createElement('div');
+        row.className = "bg-purple-50/50 p-4 rounded-2xl border border-purple-200 space-y-1.5";
+        row.innerHTML = `
+          <p>${item.text}</p>
+          <p class="text-[11px] text-purple-700 italic">💡 Hint: ${item.hint}</p>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function checkFillAnswers() {
+      const inputs = document.querySelectorAll('.fill-input');
+      inputs.forEach(inp => {
+        const userAns = inp.value.trim().toLowerCase();
+        const expected = inp.dataset.ans.toLowerCase();
+
+        if (userAns === expected) {
+          inp.className = "fill-input px-2 py-1 border-2 border-emerald-500 bg-emerald-100 rounded font-bold text-emerald-900 w-28 text-center";
+        } else {
+          inp.className = "fill-input px-2 py-1 border-2 border-red-500 bg-red-100 rounded font-bold text-red-900 w-28 text-center";
+          inp.value = expected; // reveal answer
+        }
+      });
+    }
+
+    // UNSCRAMBLE ENGINE
+    function renderUnscrambleDrills() {
+      const container = document.getElementById('unscrambleContainer');
+      container.innerHTML = '';
+
+      unscrambleData.forEach((item, idx) => {
+        const box = document.createElement('div');
+        box.className = "bg-pink-50/50 p-4 rounded-2xl border border-pink-200 space-y-3";
+
+        // Shuffle words
+        const shuffled = [...item.words].sort(() => 0.5 - Math.random());
+
+        let wordBtns = '';
+        shuffled.forEach((w, wIdx) => {
+          wordBtns += `<button onclick="pickUnscrambleWord(${idx}, '${w}', this)" class="unscram-word-${idx} px-3 py-1.5 bg-white border-2 border-pink-200 rounded-xl text-xs font-bold text-slate-800 hover:bg-pink-100 transition shadow-sm">${w}</button> `;
+        });
+
+        box.innerHTML = `
+          <span class="text-xs font-bold text-paw-pink uppercase">Sentence ${idx + 1}</span>
+          <div class="flex flex-wrap gap-2 pt-1" id="word-bank-${idx}">
+            ${wordBtns}
+          </div>
+          <div class="bg-white p-3 rounded-xl border-2 border-dashed border-pink-300 min-h-[48px] flex items-center font-bold text-xs sm:text-sm text-slate-900" id="user-sentence-${idx}">
+            <span class="text-slate-400 italic font-normal">Click words above to assemble...</span>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="checkUnscramble(${idx}, '${item.target}')" class="px-3 py-1.5 bg-paw-pink text-white text-xs font-bold rounded-xl hover:bg-pink-600 transition">Check Sentence</button>
+            <button onclick="resetUnscramble(${idx})" class="px-3 py-1.5 bg-slate-200 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-300 transition">Reset</button>
+          </div>
+          <div id="unscram-feedback-${idx}" class="hidden text-xs font-bold"></div>
+        `;
+        container.appendChild(box);
+      });
+    }
+
+    let unscrambleAnswers = {};
+
+    function pickUnscrambleWord(itemIdx, word, btn) {
+      if (!unscrambleAnswers[itemIdx]) unscrambleAnswers[itemIdx] = [];
+      unscrambleAnswers[itemIdx].push(word);
+      btn.disabled = true;
+      btn.classList.add('opacity-40');
+
+      const targetBox = document.getElementById(`user-sentence-${itemIdx}`);
+      targetBox.innerText = unscrambleAnswers[itemIdx].join(' ');
+    }
+
+    function resetUnscramble(itemIdx) {
+      unscrambleAnswers[itemIdx] = [];
+      document.getElementById(`user-sentence-${itemIdx}`).innerHTML = `<span class="text-slate-400 italic font-normal">Click words above to assemble...</span>`;
+      document.getElementById(`unscram-feedback-${itemIdx}`).classList.add('hidden');
+
+      const btns = document.querySelectorAll(`.unscram-word-${itemIdx}`);
+      btns.forEach(b => {
+        b.disabled = false;
+        b.classList.remove('opacity-40');
+      });
+    }
+
+    function checkUnscramble(itemIdx, target) {
+      const userStr = (unscrambleAnswers[itemIdx] || []).join(' ').trim();
+      const fb = document.getElementById(`unscram-feedback-${itemIdx}`);
+      fb.classList.remove('hidden');
+
+      if (userStr === target) {
+        fb.className = "text-xs font-bold text-emerald-600";
+        fb.innerText = "✓ Perfect sentence order!";
+      } else {
+        fb.className = "text-xs font-bold text-red-600";
+        fb.innerText = `✗ Not quite. Correct order: "${target}"`;
+      }
+    }
+
+    function revealAllAnswers() {
+      checkFillAnswers();
+      alert("Teacher Mode: Answers revealed across all exercise modules!");
+    }
+
+    // ================= MASTERY TEST ENGINE =================
+    function startMasteryQuiz() {
+      const nameInput = document.getElementById('quizStudentName').value.trim();
+      if (!nameInput) {
+        alert("Please enter your Student Name / Class to begin!");
+        return;
+      }
+      studentName = nameInput;
+      document.getElementById('quizStudentTag').innerText = `Student: ${studentName}`;
+
+      currentQuizIndex = 0;
+      quizScore = 0;
+      document.getElementById('quizCurrentScore').innerText = '0';
+
+      document.getElementById('quiz-start-box').classList.add('hidden');
+      document.getElementById('quiz-result-box').classList.add('hidden');
+      document.getElementById('quiz-active-box').classList.remove('hidden');
+
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      const q = masteryTestQuestions[currentQuizIndex];
+      document.getElementById('quizQCount').innerText = `Q ${currentQuizIndex + 1} / 10`;
+      document.getElementById('quizProgressBar').style.width = `${((currentQuizIndex + 1) / 10) * 100}%`;
+      document.getElementById('quizTopicTag').innerText = `🐾 ${q.topic}`;
+      document.getElementById('quizQuestionText').innerText = q.q;
+
+      const grid = document.getElementById('quizOptionsGrid');
+      grid.innerHTML = '';
+
+      const fbBox = document.getElementById('quizFeedbackBox');
+      fbBox.className = "hidden p-4 rounded-2xl border text-xs sm:text-sm font-medium";
+      document.getElementById('quizNextBtn').classList.add('hidden');
+
+      q.opts.forEach((opt, oIdx) => {
+        const btn = document.createElement('button');
+        btn.className = "quiz-opt-btn w-full text-left p-4 rounded-2xl border-2 border-slate-200 hover:border-paw-orange hover:bg-orange-50/50 font-bold text-xs sm:text-sm text-paw-dark transition flex items-center justify-between";
+        btn.innerHTML = `<span><strong class="mr-2 text-paw-orange">${String.fromCharCode(65 + oIdx)}.</strong> ${opt}</span>`;
+        btn.onclick = () => answerQuizQuestion(btn, oIdx, q.ans, q.exp);
+        grid.appendChild(btn);
+      });
+    }
+
+    function answerQuizQuestion(btn, selected, correct, exp) {
+      const buttons = document.querySelectorAll('.quiz-opt-btn');
+      buttons.forEach(b => b.disabled = true);
+
+      const fbBox = document.getElementById('quizFeedbackBox');
+      fbBox.classList.remove('hidden');
+
+      if (selected === correct) {
+        quizScore += 10;
+        document.getElementById('quizCurrentScore').innerText = quizScore;
+        btn.className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-bold text-xs sm:text-sm text-emerald-900 flex items-center justify-between";
+        btn.innerHTML += `<i class="fa-solid fa-circle-check text-emerald-600 text-lg"></i>`;
+        
+        fbBox.className = "p-4 rounded-2xl border border-emerald-300 bg-emerald-50 text-emerald-900 text-xs sm:text-sm font-medium";
+        fbBox.innerHTML = `<span class="font-bold text-emerald-700">✓ Excellent!</span> ${exp}`;
+      } else {
+        btn.className = "w-full text-left p-4 rounded-2xl border-2 border-red-500 bg-red-50 font-bold text-xs sm:text-sm text-red-900 flex items-center justify-between";
+        btn.innerHTML += `<i class="fa-solid fa-circle-xmark text-red-600 text-lg"></i>`;
+
+        buttons[correct].className = "w-full text-left p-4 rounded-2xl border-2 border-emerald-500 bg-emerald-50 font-bold text-xs sm:text-sm text-emerald-900 flex items-center justify-between";
+        fbBox.className = "p-4 rounded-2xl border border-red-300 bg-red-50 text-red-900 text-xs sm:text-sm font-medium";
+        fbBox.innerHTML = `<span class="font-bold text-red-600">✗ Incorrect.</span> Correct answer: <strong>${String.fromCharCode(65 + correct)}</strong>. ${exp}`;
+      }
+
+      document.getElementById('quizNextBtn').classList.remove('hidden');
+    }
+
+    function nextQuizQuestion() {
+      currentQuizIndex++;
+      if (currentQuizIndex < masteryTestQuestions.length) {
+        renderQuizQuestion();
+      } else {
+        finishMasteryQuiz();
+      }
+    }
+
+    function finishMasteryQuiz() {
+      document.getElementById('quiz-active-box').classList.add('hidden');
+      document.getElementById('quiz-result-box').classList.remove('hidden');
+
+      document.getElementById('certStudentSub').innerText = `Awarded to: ${studentName}`;
+      document.getElementById('finalCertScore').innerText = `${quizScore} / 100`;
+
+      let rank = "Pet Buddy Scholar 🐾";
+      let badge = "🐶";
+      if (quizScore >= 90) {
+        rank = "Master Pet Scholar 🐱👑";
+        badge = "👑";
+      } else if (quizScore >= 70) {
+        rank = "Top Pet Learner 🐶⭐";
+        badge = "🏆";
+      }
+
+      document.getElementById('certBadge').innerText = badge;
+      document.getElementById('finalCertRank').innerText = rank;
+    }
+
+    function restartQuiz() {
+      document.getElementById('quiz-result-box').classList.add('hidden');
+      document.getElementById('quiz-start-box').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
